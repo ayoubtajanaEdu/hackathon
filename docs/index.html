@@ -34,10 +34,73 @@
         </table>
 
         <div id="intro">
-
+            <h2>Introductie</h2>
+            <p>
+                Wij hebben gekozen om het spel Keep Talking and Nobody explodes te maken.
+            </p>
         </div>
         <div id="Spel1" class="spel">
+            <h2>Module 1: Het juiste draad doorknippen</h2>
+            <h3>Het programma:</h3>
+            <pre>
+                <code>
+                    const int wirePins[] = {2, 3, 4, 5}; // draadjes 1–4
+                    const int correctWire = 2; // draad 2 (pin 2) is correct
 
+                    const int redLed = 8;
+                    const int greenLed = 9;
+
+                    void setup() {
+                      Serial.begin(9600);
+                    
+                      for (int i = 0; i < 4; i++) {
+                        pinMode(wirePins[i], INPUT);
+                      }
+                  
+                      pinMode(redLed, OUTPUT);
+                      pinMode(greenLed, OUTPUT);
+                  
+                      digitalWrite(redLed, LOW);
+                      digitalWrite(greenLed, LOW);
+                    }
+
+                    void loop() {
+                      // Check of een draad eruit is (LOW)
+                      bool anyPulled = false;
+                      bool correctPulled = false;
+                    
+                      for (int i = 0; i < 4; i++) {
+                        int state = digitalRead(wirePins[i]);
+                    
+                        if (state == LOW) { // draad los
+                          anyPulled = true;
+                          if (wirePins[i] == correctWire) {
+                            correctPulled = true;
+                          }
+                        }
+                      }
+                  
+                      if (anyPulled) {
+                        if (correctPulled) {
+                          digitalWrite(greenLed, HIGH);
+                          digitalWrite(redLed, LOW);
+                        } else {
+                          digitalWrite(redLed, HIGH);
+                          digitalWrite(greenLed, LOW);
+                        }
+                      } else {
+                        // Alle draden zijn weer aangesloten
+                        digitalWrite(redLed, LOW);
+                        digitalWrite(greenLed, LOW);
+                      }
+                  
+                      delay(100); // kleine vertraging
+                    }   
+                </code>
+            </pre>
+
+            <h3>Het schema:</h3>
+            <img src="" alt="Schema module 1: knip het juiste draad door in Tinker">
         </div>
         
     </main>
